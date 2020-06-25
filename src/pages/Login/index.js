@@ -27,8 +27,14 @@ export default function SignIn() {
   const { signIn } = useContext(AuthContext);
 
   async function handleLogin(data) {
-    signIn(data);
-    history.push("/");
+    const log = await signIn(data);
+
+    if (!log) {
+      history.push("/home");
+      window.location.reload(false);
+    } else {
+      history.push("/login");
+    }
   }
 
   return (

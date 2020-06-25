@@ -12,7 +12,7 @@ function AppRoutes() {
   return (
     <>
       <BrowserRouter>
-        <Route exact path="/" component={Home} />
+        <Route exact path="/home" component={Home} />
         <Route path="/clients" component={Clients} />
         <Route path="/category" component={Category} />
         <Route path="/products" component={Products} />

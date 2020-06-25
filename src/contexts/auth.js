@@ -2,6 +2,7 @@ import React, { useState, createContext, useEffect } from "react";
 import api from "../services/api";
 
 import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
 
 export const AuthContext = createContext();
 
@@ -53,6 +54,7 @@ export function AuthProvider({ children }) {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 3000,
       });
+      return message;
     }
 
     localStorage.setItem("@ManagerAuth:userName", name);
