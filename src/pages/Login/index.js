@@ -27,12 +27,8 @@ export default function SignIn() {
   const { signIn } = useContext(AuthContext);
 
   async function handleLogin(data) {
-    const flag = await signIn(data);
-    if (flag === "error") {
-      history.push("/login");
-    } else {
-      history.push("/");
-    }
+    signIn(data);
+    history.push("/");
   }
 
   return (

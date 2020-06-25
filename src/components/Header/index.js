@@ -41,7 +41,7 @@ function Header({ title = "Manager" }) {
   const theme = useTheme();
   const history = useHistory();
 
-  const { user, signOut } = useContext(AuthContext);
+  const { user, signOut, userName } = useContext(AuthContext);
 
   const [open, setOpen] = useState(false);
   const [menu, setMenu] = useState(null);
@@ -63,8 +63,12 @@ function Header({ title = "Manager" }) {
   }
 
   function handleToLogin() {
-    signOut();
     history.push("/login");
+  }
+
+  function handleToHome() {
+    signOut();
+    history.push("/");
   }
 
   return (
@@ -95,8 +99,11 @@ function Header({ title = "Manager" }) {
           <Box component="div">
             {user ? (
               <Box component="div" className={classes.infoUser}>
-                <Typography variant="span" style={{ color: "black" }}>
-                  {/* {user} */}
+                <Typography
+                  variant="span"
+                  style={{ color: "black", marginRight: 20 }}
+                >
+                  {userName}
                 </Typography>
                 <Avatar src={avatar} />
                 <img
@@ -129,7 +136,7 @@ function Header({ title = "Manager" }) {
                 <AccountBox className={classes.icon} />
                 Minha Conta
               </MenuItem>
-              <MenuItem onClick={handleToLogin}>
+              <MenuItem onClick={handleToHome}>
                 <ExitToApp className={classes.icon} />
                 Sair
               </MenuItem>

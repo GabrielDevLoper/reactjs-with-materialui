@@ -9,15 +9,18 @@ toast.configure();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [userName, setUserName] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function loadStorageData() {
+      const storedUserName = localStorage.getItem("@ManagerAuth:userName");
       const storagedUser = localStorage.getItem("@ManagerAuth:user");
       const storagedToken = localStorage.getItem("@ManagerAuth:token");
 
       if (storagedUser && storagedToken) {
         setUser(storagedUser);
+        setUserName(storedUserName);
         setLoading(true);
       }
     }
@@ -41,7 +44,9 @@ export function AuthProvider({ children }) {
       },
     });
 
-    setUser(response.data.email);
+    const { name, email: emails } = response.data;
+    setUserName(name);
+    setUser(emails);
 
     if (message) {
       toast.error(`❌ ${message}`, {
@@ -50,14 +55,9 @@ export function AuthProvider({ children }) {
       });
     }
 
-    localStorage.setItem("@ManagerAuth:user", response.data.email);
+    localStorage.setItem("@ManagerAuth:userName", name);
+    localStorage.setItem("@ManagerAuth:user", emails);
     localStorage.setItem("@ManagerAuth:token", token);
-
-    if (response.data.email && token) {
-      return `ok`;
-    } else {
-      return `error`;
-    }
   }
 
   function signOut() {
@@ -67,7 +67,7 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ signed: !!user, signIn, loading, user, signOut }}
+      value={{ signed: !!user, signIn, loading, user, userName, signOut }}
     >
       {children}
     </AuthContext.Provider>
