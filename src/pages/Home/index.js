@@ -18,31 +18,25 @@ export default function Home() {
         {/* conteudo do centro do site */}
         <Grid container spacing={3}>
           <Grid item xs={3}>
-            <Paper className={classes.paper1}>xs=12</Paper>
+            <Paper className={classes.paper1}></Paper>
           </Grid>
           <Grid item xs={3}>
-            <Paper className={classes.paper1}>xs=12</Paper>
+            <Paper className={classes.paper1}></Paper>
           </Grid>
           <Grid item xs={3}>
-            <Paper className={classes.paper1}>xs=12</Paper>
+            <Paper className={classes.paper1}></Paper>
           </Grid>
           <Grid item xs={3}>
-            <Paper className={classes.paper1}>xs=12</Paper>
+            <Paper className={classes.paper1}></Paper>
           </Grid>
           <Grid item xs={6}>
-            <Paper className={classes.paper2}>xs=12</Paper>
+            <Paper className={classes.paper2}></Paper>
           </Grid>
           <Grid item xs={3}>
-            <Paper className={classes.paper3}>xs=12</Paper>
+            <Paper className={classes.paper3}></Paper>
           </Grid>
           <Grid item xs={3}>
-            <Paper className={classes.paper3}>xs=12</Paper>
-          </Grid>
-          <Grid item xs={6}>
-            <Paper className={classes.paper3}>xs=12</Paper>
-          </Grid>
-          <Grid item xs={6}>
-            <Paper className={classes.paper3}>xs=12</Paper>
+            <Paper className={classes.paper3}></Paper>
           </Grid>
         </Grid>
       </Main>
