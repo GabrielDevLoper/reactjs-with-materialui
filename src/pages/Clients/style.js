@@ -25,9 +25,9 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   paper: {
-    display: "flex",
+    // display: "flex",
     padding: theme.spacing(2),
-    justifyContent: "flex-end",
+    // justifyContent: "flex-end",
     color: theme.palette.text.secondary,
   },
 
@@ -48,6 +48,13 @@ const useStyles = makeStyles((theme) => ({
   },
   input: {
     margin: 5,
+  },
+
+  btnGroup: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 15,
   },
 }));
 

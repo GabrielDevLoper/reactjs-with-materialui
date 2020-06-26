@@ -13,9 +13,10 @@ import {
   TablePagination,
   IconButton,
   Button,
+  Typography,
 } from "@material-ui/core";
 import Pagination from "@material-ui/lab/Pagination";
-
+import { MDBDataTable } from "mdbreact";
 import Header from "../../components/Header";
 import Main from "../../components/Main";
 import Modal from "../../components/Modal";
@@ -38,22 +39,23 @@ function Clients(props) {
   const formRef = useRef(null);
   const [clients, setClients] = useState([]);
   const [page, setPage] = useState(1);
+  const [countClients, setCountClients] = useState(0);
 
   const { handleClose } = useContext(ModalContext);
-
-  const handleChange = (event, value) => {
-    setPage(value);
-  };
 
   useEffect(() => {
     async function loadClients() {
       const response = await api.get(`/clients?page=${page}`);
-
+      setCountClients(Number(response.headers["x-total-count"]));
       setClients(response.data);
     }
 
     loadClients();
   }, [page]);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage + 1);
+  };
 
   function handleAddClient(data) {
     console.log(data);
@@ -129,23 +131,25 @@ function Clients(props) {
                       />
                     </Box>
 
-                    <Button
-                      type="submit"
-                      variant="contained"
-                      color="primary"
-                      className={classes.submit}
-                    >
-                      Salvar
-                    </Button>
-                    <Button
-                      type="reset"
-                      variant="contained"
-                      color="secondary"
-                      className={classes.submit}
-                      onClick={handleClose}
-                    >
-                      Cancelar
-                    </Button>
+                    <Box component="div" className={classes.btnGroup}>
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                      >
+                        Salvar
+                      </Button>
+                      <Button
+                        type="reset"
+                        variant="contained"
+                        color="secondary"
+                        className={classes.submit}
+                        onClick={handleClose}
+                      >
+                        Cancelar
+                      </Button>
+                    </Box>
                   </Form>
                 </Box>
               </Modal>
@@ -171,7 +175,7 @@ function Clients(props) {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {clients.map((client) => (
+                    {clients.map((client, index) => (
                       <StyledTableRow key={client.id}>
                         <StyledTableCell component="th" scope="row">
                           {client.name_client}
@@ -200,12 +204,14 @@ function Clients(props) {
                   </TableBody>
                 </Table>
               </TableContainer>
-              <Pagination
-                count={clients.length}
-                variant="outlined"
-                color="secondary"
-                page={page}
-                onChange={handleChange}
+
+              <TablePagination
+                rowsPerPageOptions={[5]}
+                component="div"
+                count={countClients}
+                page={page - 1}
+                onChangePage={handleChangePage}
+                rowsPerPage={5}
               />
             </Paper>
           </Grid>

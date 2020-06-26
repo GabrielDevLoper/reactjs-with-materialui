@@ -7,12 +7,15 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   paper: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     backgroundColor: theme.palette.background.paper,
     width: 500,
-    height: 400,
+    height: 300,
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
-    outline: "none",
+    borderRadius: 20,
   },
 
   btn: {
