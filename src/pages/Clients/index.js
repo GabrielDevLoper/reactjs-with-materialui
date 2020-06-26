@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-
 import { toast } from "react-toastify";
+import Pagination from "@material-ui/lab/Pagination";
 
 import {
   Box,
@@ -15,6 +15,7 @@ import {
   IconButton,
   Button,
   InputBase,
+  Typography,
 } from "@material-ui/core";
 
 import Header from "../../components/Header";
@@ -111,6 +112,7 @@ function Clients() {
               </div>
               <Modal btnTitle="Cadastrar novo cliente" Icon={Add}>
                 <Box component="div">
+                  <Typography variant="h4">Cadastrar Cliente</Typography>
                   <Form
                     ref={formRef}
                     onSubmit={handleAddClient}
@@ -245,6 +247,8 @@ function Clients() {
                   </TableBody>
                 </Table>
               </TableContainer>
+
+              <Typography>Page: {page}</Typography>
 
               <TablePagination
                 rowsPerPageOptions={[5]}
