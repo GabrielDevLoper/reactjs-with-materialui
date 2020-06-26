@@ -63,10 +63,6 @@ function Header({ title = "Manager" }) {
   }
 
   function handleToLogin() {
-    history.push("/login");
-  }
-
-  function handleToHome() {
     signOut();
     history.push("/");
   }
@@ -97,33 +93,23 @@ function Header({ title = "Manager" }) {
             </Typography>
           </Box>
           <Box component="div">
-            {user ? (
-              <Box component="div" className={classes.infoUser}>
-                <Typography
-                  variant="span"
-                  style={{ color: "black", marginRight: 20 }}
-                >
-                  {userName}
-                </Typography>
-                <Avatar src={avatar} />
-                <img
-                  aria-controls="simple-menu"
-                  aria-haspopup="true"
-                  onClick={handleClick}
-                  src={arrow}
-                  alt=""
-                  className={classes.imgAvatar}
-                />
-              </Box>
-            ) : (
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={handleToLogin}
+            <Box component="div" className={classes.infoUser}>
+              <Typography
+                variant="span"
+                style={{ color: "black", marginRight: 20 }}
               >
-                Login
-              </Button>
-            )}
+                {userName}
+              </Typography>
+              <Avatar src={avatar} />
+              <img
+                aria-controls="simple-menu"
+                aria-haspopup="true"
+                onClick={handleClick}
+                src={arrow}
+                alt=""
+                className={classes.imgAvatar}
+              />
+            </Box>
 
             <Menu
               id="simple-menu"
@@ -136,7 +122,7 @@ function Header({ title = "Manager" }) {
                 <AccountBox className={classes.icon} />
                 Minha Conta
               </MenuItem>
-              <MenuItem onClick={handleToHome}>
+              <MenuItem onClick={handleToLogin}>
                 <ExitToApp className={classes.icon} />
                 Sair
               </MenuItem>

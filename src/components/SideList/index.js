@@ -22,7 +22,7 @@ const menuItems = [
   {
     listIcon: <HomeRoundedIcon />,
     listText: "Home",
-    listPath: "/home",
+    listPath: "/",
   },
   {
     listIcon: <GroupIcon />,
