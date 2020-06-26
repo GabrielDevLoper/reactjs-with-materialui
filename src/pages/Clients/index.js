@@ -14,16 +14,16 @@ import {
   IconButton,
   Button,
   Typography,
+  InputBase,
 } from "@material-ui/core";
-import Pagination from "@material-ui/lab/Pagination";
-import { MDBDataTable } from "mdbreact";
+
 import Header from "../../components/Header";
 import Main from "../../components/Main";
 import Modal from "../../components/Modal";
 
 import useStyles from "./style";
 import { StyledTableCell, StyledTableRow } from "./style";
-import { Delete, Edit } from "@material-ui/icons";
+import { Delete, Edit, Search } from "@material-ui/icons";
 
 import api from "../../services/api";
 
@@ -40,6 +40,8 @@ function Clients(props) {
   const [clients, setClients] = useState([]);
   const [page, setPage] = useState(1);
   const [countClients, setCountClients] = useState(0);
+  const [search, setSearch] = useState("");
+  const [filteredClient, setFilteredClient] = useState([]);
 
   const { handleClose } = useContext(ModalContext);
 
@@ -53,12 +55,30 @@ function Clients(props) {
     loadClients();
   }, [page]);
 
+  useEffect(() => {
+    setFilteredClient(
+      clients.filter((client) => {
+        return (
+          client.name_client.toLowerCase().includes(search.toLowerCase()) ||
+          client.cpf.toLowerCase().includes(search.toLowerCase())
+        );
+      })
+    );
+  }, [search, clients]);
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage + 1);
   };
 
-  function handleAddClient(data) {
-    console.log(data);
+  //Pesquisando cliente por nome ou por cpf
+  async function handleAddClient(data, { reset }) {
+    await api.post("/clients", data);
+
+    reset();
+  }
+
+  function handleDelete(id) {
+    api.delete(`/clients/${id}`);
   }
 
   return (
@@ -69,7 +89,22 @@ function Clients(props) {
         <Grid container spacing={3}>
           <Grid item xs={12}>
             {/* Conteudo da pagina */}
-            <Box className={classes.paper}>
+            <Box className={classes.paper2}>
+              <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                  <Search />
+                </div>
+                <InputBase
+                  placeholder="Search…"
+                  onChange={(e) => setSearch(e.target.value)}
+                  value={search}
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                  }}
+                  inputProps={{ "aria-label": "search" }}
+                />
+              </div>
               <Modal btnTitle="Cadastrar novo cliente" Icon={Add}>
                 <Box component="div">
                   <Form
@@ -175,7 +210,7 @@ function Clients(props) {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {clients.map((client, index) => (
+                    {filteredClient.map((client, index) => (
                       <StyledTableRow key={client.id}>
                         <StyledTableCell component="th" scope="row">
                           {client.name_client}
@@ -190,7 +225,7 @@ function Clients(props) {
                           {client.contact}
                         </StyledTableCell>
                         <StyledTableCell align="right">
-                          <IconButton>
+                          <IconButton onClick={() => handleDelete(client.id)}>
                             <Delete />
                           </IconButton>
                         </StyledTableCell>
