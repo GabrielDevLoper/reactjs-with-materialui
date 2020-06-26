@@ -1,4 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
+
+import { toast } from "react-toastify";
+
 import {
   Box,
   Grid,
@@ -7,13 +10,10 @@ import {
   Table,
   TableHead,
   TableRow,
-  TableCell,
   TableBody,
-  Checkbox,
   TablePagination,
   IconButton,
   Button,
-  Typography,
   InputBase,
 } from "@material-ui/core";
 
@@ -34,16 +34,17 @@ import { ModalContext } from "../../contexts/modal";
 
 import Add from "../../assets/add.svg";
 
-function Clients(props) {
+toast.configure();
+function Clients() {
   const classes = useStyles();
   const formRef = useRef(null);
+  const { handleClose } = useContext(ModalContext);
+
   const [clients, setClients] = useState([]);
   const [page, setPage] = useState(1);
   const [countClients, setCountClients] = useState(0);
   const [search, setSearch] = useState("");
   const [filteredClient, setFilteredClient] = useState([]);
-
-  const { handleClose } = useContext(ModalContext);
 
   useEffect(() => {
     async function loadClients() {
@@ -70,10 +71,13 @@ function Clients(props) {
     setPage(newPage + 1);
   };
 
-  //Pesquisando cliente por nome ou por cpf
   async function handleAddClient(data, { reset }) {
     await api.post("/clients", data);
-
+    toast.success(`✔️ Cadastrado com sucesso`, {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 3000,
+      className: classes.success,
+    });
     reset();
   }
 
@@ -137,6 +141,7 @@ function Clients(props) {
                         autoComplete="text"
                         autoFocus
                         className={classes.input}
+                        mask="999.999.999-99"
                       />
                     </Box>
                     <Box component="div" className={classes.inputGroup}>
@@ -163,6 +168,7 @@ function Clients(props) {
                         autoComplete="text"
                         autoFocus
                         className={classes.input}
+                        mask="(99)99999-9999"
                       />
                     </Box>
 

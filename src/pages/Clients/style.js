@@ -107,6 +107,12 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
+
+  success: {
+    fontWeight: "bold",
+    borderRadius: 20,
+    fontSize: 20,
+  },
 }));
 
 export const StyledTableCell = withStyles((theme) => ({

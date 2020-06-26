@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import { useField } from "@unform/core";
 import TextField from "@material-ui/core/TextField";
+import InputMask from "react-input-mask";
 
 export default function Input({ name, ...rest }) {
   const inputRef = useRef(null);
-  const { fieldName, defaultValue, registerField, error } = useField(name);
+  const { fieldName, defaultValue, registerField } = useField(name);
 
   useEffect(() => {
     registerField({
@@ -15,6 +16,8 @@ export default function Input({ name, ...rest }) {
   }, [fieldName, registerField]);
 
   return (
-    <TextField inputRef={inputRef} defaultValue={defaultValue} {...rest} />
+    <InputMask defaultValue={defaultValue} inputRef={inputRef} {...rest}>
+      <TextField {...rest} />
+    </InputMask>
   );
 }
