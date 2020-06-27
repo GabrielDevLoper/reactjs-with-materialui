@@ -121,7 +121,7 @@ function Clients() {
                   >
                     <Box component="div" className={classes.inputGroup}>
                       <Input
-                        variant="filled"
+                        variant="outlined"
                         margin="normal"
                         required
                         fullWidth
@@ -133,7 +133,7 @@ function Clients() {
                         className={classes.input}
                       />
                       <Input
-                        variant="filled"
+                        variant="outlined"
                         margin="normal"
                         required
                         fullWidth
@@ -148,7 +148,7 @@ function Clients() {
                     </Box>
                     <Box component="div" className={classes.inputGroup}>
                       <Input
-                        variant="filled"
+                        variant="outlined"
                         margin="normal"
                         required
                         fullWidth
@@ -160,7 +160,7 @@ function Clients() {
                         className={classes.input}
                       />
                       <Input
-                        variant="filled"
+                        variant="outlined"
                         margin="normal"
                         required
                         fullWidth
