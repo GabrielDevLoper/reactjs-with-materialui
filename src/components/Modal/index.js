@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import { useSpring, animated } from "react-spring/web.cjs"; // web.cjs is required for IE 11 support
-import { ModalContext } from "../../contexts/modal";
+import { Edit, Visibility } from "@material-ui/icons";
 
 import useStyles from "./style";
 
@@ -40,7 +40,15 @@ Fade.propTypes = {
 
 export default function SpringModal({ btnTitle, children, Icon }) {
   const classes = useStyles();
-  const { open, handleOpen, handleClose } = useContext(ModalContext);
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <div>
@@ -48,6 +56,7 @@ export default function SpringModal({ btnTitle, children, Icon }) {
         <img src={Icon} alt="" />
         {btnTitle}
       </button>
+
       <Modal
         aria-labelledby="spring-modal-title"
         aria-describedby="spring-modal-description"

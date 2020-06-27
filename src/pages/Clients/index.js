@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { useHistory } from "react-router-dom";
+
 import { toast } from "react-toastify";
-import Pagination from "@material-ui/lab/Pagination";
 
 import {
   Box,
@@ -17,45 +18,28 @@ import {
   InputBase,
   Typography,
 } from "@material-ui/core";
+import { Delete, Edit, Search, Save, Visibility } from "@material-ui/icons";
+import Add from "../../assets/add.svg";
 
 import Header from "../../components/Header";
 import Main from "../../components/Main";
-import Modal from "../../components/Modal";
+import EditClient from "../AddClient";
 
-import useStyles from "./style";
-import { StyledTableCell, StyledTableRow } from "./style";
-import { Delete, Edit, Search } from "@material-ui/icons";
+import useStyles, { StyledTableCell, StyledTableRow } from "./style";
 
 import api from "../../services/api";
 
-import { Form } from "@unform/web";
-import Input from "../../components/Input";
-
-import { ModalContext } from "../../contexts/modal";
-
-import Add from "../../assets/add.svg";
+import { ClientContext } from "../../contexts/clients";
 
 toast.configure();
 function Clients() {
   const classes = useStyles();
-  const formRef = useRef(null);
-  const { handleClose } = useContext(ModalContext);
+  const history = useHistory();
 
-  const [clients, setClients] = useState([]);
-  const [page, setPage] = useState(1);
-  const [countClients, setCountClients] = useState(0);
+  const { clients, page, setPage, countClients } = useContext(ClientContext);
   const [search, setSearch] = useState("");
+
   const [filteredClient, setFilteredClient] = useState([]);
-
-  useEffect(() => {
-    async function loadClients() {
-      const response = await api.get(`/clients?page=${page}`);
-      setCountClients(Number(response.headers["x-total-count"]));
-      setClients(response.data);
-    }
-
-    loadClients();
-  }, [page]);
 
   useEffect(() => {
     setFilteredClient(
@@ -72,18 +56,16 @@ function Clients() {
     setPage(newPage + 1);
   };
 
-  async function handleAddClient(data, { reset }) {
-    await api.post("/clients", data);
-    toast.success(`✔️ Cadastrado com sucesso`, {
-      position: toast.POSITION.TOP_RIGHT,
-      autoClose: 3000,
-      className: classes.success,
-    });
-    reset();
-  }
-
   function handleDelete(id) {
     api.delete(`/clients/${id}`);
+  }
+
+  function handleToAddClient() {
+    history.push("/add-client");
+  }
+
+  async function handleToEditClient(id) {
+    history.push(`/edit-client/${id}`);
   }
 
   return (
@@ -110,92 +92,14 @@ function Clients() {
                   inputProps={{ "aria-label": "search" }}
                 />
               </div>
-              <Modal btnTitle="Cadastrar novo cliente" Icon={Add}>
-                <Box component="div">
-                  <Typography variant="h4">Cadastrar Cliente</Typography>
-                  <Form
-                    ref={formRef}
-                    onSubmit={handleAddClient}
-                    className={classes.form}
-                    noValidate
-                  >
-                    <Box component="div" className={classes.inputGroup}>
-                      <Input
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="name_client"
-                        label="Nome"
-                        name="name_client"
-                        autoComplete="text"
-                        autoFocus
-                        className={classes.input}
-                      />
-                      <Input
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="cpf"
-                        label="CPF"
-                        name="cpf"
-                        autoComplete="text"
-                        autoFocus
-                        className={classes.input}
-                        mask="999.999.999-99"
-                      />
-                    </Box>
-                    <Box component="div" className={classes.inputGroup}>
-                      <Input
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="email"
-                        label="Email Address"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
-                        className={classes.input}
-                      />
-                      <Input
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="contact"
-                        label="Contato"
-                        name="contact"
-                        autoComplete="text"
-                        autoFocus
-                        className={classes.input}
-                        mask="(99)99999-9999"
-                      />
-                    </Box>
-
-                    <Box component="div" className={classes.btnGroup}>
-                      <Button
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                      >
-                        Salvar
-                      </Button>
-                      <Button
-                        type="reset"
-                        variant="contained"
-                        color="secondary"
-                        className={classes.submit}
-                        onClick={handleClose}
-                      >
-                        Cancelar
-                      </Button>
-                    </Box>
-                  </Form>
-                </Box>
-              </Modal>
+              <button
+                className={classes.btn}
+                type="button"
+                onClick={handleToAddClient}
+              >
+                <img src={Add} alt="" />
+                Cadastrar novo cliente
+              </button>
             </Box>
           </Grid>
           <Grid item xs={12}>
@@ -213,8 +117,7 @@ function Clients() {
                       <StyledTableCell align="right">CPF</StyledTableCell>
                       <StyledTableCell align="right">E-mail</StyledTableCell>
                       <StyledTableCell align="right">Contato</StyledTableCell>
-                      <StyledTableCell align="right">Excluir</StyledTableCell>
-                      <StyledTableCell align="right">Alterar</StyledTableCell>
+                      <StyledTableCell align="right">Ações</StyledTableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -234,12 +137,15 @@ function Clients() {
                         </StyledTableCell>
                         <StyledTableCell align="right">
                           <IconButton onClick={() => handleDelete(client.id)}>
-                            <Delete />
+                            <Delete color="secondary" />
                           </IconButton>
-                        </StyledTableCell>
-                        <StyledTableCell align="right">
+                          <IconButton
+                            onClick={() => handleToEditClient(client.id)}
+                          >
+                            <Edit className={classes.iconEdit} />
+                          </IconButton>
                           <IconButton>
-                            <Edit />
+                            <Visibility color="primary" />
                           </IconButton>
                         </StyledTableCell>
                       </StyledTableRow>
@@ -247,9 +153,7 @@ function Clients() {
                   </TableBody>
                 </Table>
               </TableContainer>
-
               <Typography>Page: {page}</Typography>
-
               <TablePagination
                 rowsPerPageOptions={[5]}
                 component="div"

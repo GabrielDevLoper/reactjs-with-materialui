@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-around",
-    backgroundColor: " #644ad4",
+    backgroundColor: "#644ad4",
     color: "white",
     width: "225px",
     height: "50px",

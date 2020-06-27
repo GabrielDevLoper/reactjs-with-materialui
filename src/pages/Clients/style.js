@@ -2,7 +2,6 @@ import { makeStyles, withStyles, fade } from "@material-ui/core/styles";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 
-const lilas = "#7159c1";
 const white = "#fff";
 
 const useStyles = makeStyles((theme) => ({
@@ -42,28 +41,6 @@ const useStyles = makeStyles((theme) => ({
 
   table: {
     minWidth: 650,
-  },
-
-  submit: {
-    margin: 10,
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(2),
-  },
-
-  inputGroup: {
-    display: "flex",
-  },
-  input: {
-    margin: 5,
-  },
-
-  btnGroup: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 15,
   },
 
   search: {
@@ -112,6 +89,31 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
     borderRadius: 20,
     fontSize: 20,
+  },
+
+  iconEdit: {
+    color: "#b26500",
+  },
+
+  btn: {
+    "&:hover": {
+      backgroundColor: "#6F52ED",
+    },
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-around",
+    backgroundColor: "#644ad4",
+    color: "white",
+    width: "225px",
+    height: "50px",
+    borderRadius: "5px",
+    border: "none",
+    fontSize: "14px",
+    fontWeight: "bold",
+    lineHeight: "17px",
+    cursor: "pointer",
+    outline: "none",
+    transition: "400ms",
   },
 }));
 

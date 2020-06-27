@@ -5,17 +5,17 @@ import "react-toastify/dist/ReactToastify.css";
 import Routes from "./routes";
 
 import { AuthProvider } from "./contexts/auth";
-import ModalProvider from "./contexts/modal";
+import { ClientProvider } from "./contexts/clients";
 
 import "./style/GlobalStyle.css";
 
 function App() {
   return (
     <AuthProvider>
-      <ModalProvider>
-        <CssBaseline />
+      <CssBaseline />
+      <ClientProvider>
         <Routes />
-      </ModalProvider>
+      </ClientProvider>
     </AuthProvider>
   );
 }

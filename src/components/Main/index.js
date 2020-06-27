@@ -3,7 +3,6 @@ import { Box } from "@material-ui/core";
 import { useSpring, animated } from "react-spring";
 
 import useStyles from "./style";
-import Header from "../Header";
 
 function Main({ children }) {
   const classes = useStyles();
