@@ -5,8 +5,8 @@ import { BrowserRouter, Route } from "react-router-dom";
 import Home from "../pages/Home";
 import Clients from "../pages/Clients";
 import Category from "../pages/Category";
-import EditClient from "../pages/EditClient";
-import AddClient from "../pages/AddClient";
+import EditClient from "../pages/Clients/EditClient";
+import AddClient from "../pages/Clients/AddClient";
 import Products from "../pages/Products";
 import Users from "../pages/Users";
 

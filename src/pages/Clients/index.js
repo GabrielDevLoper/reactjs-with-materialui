@@ -23,7 +23,6 @@ import Add from "../../assets/add.svg";
 
 import Header from "../../components/Header";
 import Main from "../../components/Main";
-import EditClient from "../AddClient";
 
 import useStyles, { StyledTableCell, StyledTableRow } from "./style";
 
