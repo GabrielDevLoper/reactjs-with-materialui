@@ -41,6 +41,11 @@ const useStyles = makeStyles((theme) => ({
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(2),
   },
+
+  IconBack: {
+    fontSize: "30px",
+    color: "#6F52ED",
+  },
 }));
 
 export default useStyles;

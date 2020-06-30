@@ -16,7 +16,7 @@ export function ClientProvider({ children }) {
     }
 
     loadClients();
-  }, [page, countClients]);
+  }, [page]);
 
   return (
     <ClientContext.Provider

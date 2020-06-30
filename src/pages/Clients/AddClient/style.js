@@ -33,6 +33,18 @@ const useStyles = makeStyles((theme) => ({
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(2),
   },
+  paper: {
+    // display: "flex",
+    textAlign: "center",
+    padding: theme.spacing(2),
+    // justifyContent: "flex-end",
+    color: theme.palette.text.secondary,
+  },
+
+  IconBack: {
+    fontSize: "30px",
+    color: "#6F52ED",
+  },
 }));
 
 export default useStyles;
