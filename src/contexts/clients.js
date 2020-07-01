@@ -8,19 +8,16 @@ export function ClientProvider({ children }) {
   const [page, setPage] = useState(1);
   const [countClients, setCountClients] = useState(0);
 
-  useEffect(() => {
-    async function loadClients() {
-      const response = await api.get(`/clients?page=${page}`);
-      setCountClients(Number(response.headers["x-total-count"]));
-      setClients(response.data);
-    }
-
-    loadClients();
-  }, [page]);
-
   return (
     <ClientContext.Provider
-      value={{ clients, page, setPage, countClients, setCountClients }}
+      value={{
+        clients,
+        page,
+        setPage,
+        countClients,
+        setCountClients,
+        setClients,
+      }}
     >
       {children}
     </ClientContext.Provider>

@@ -42,7 +42,7 @@ function EditClient(props) {
 
   const [selectClient, setSelectClient] = useState([]);
 
-  async function handleUpdate(data) {
+  async function handleUpdate(data, { reset }) {
     const { id, name_client, email, cpf, contact } = data;
     await api.put(`/clients/${id}`, {
       name_client,
@@ -50,6 +50,14 @@ function EditClient(props) {
       cpf,
       contact,
     });
+
+    toast.success(`✔️ Alterado com sucesso`, {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 3000,
+      className: classes.success,
+    });
+
+    reset();
   }
 
   useEffect(() => {
@@ -72,7 +80,7 @@ function EditClient(props) {
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Box component="div">
-              <IconButton button onClick={handleToBack}>
+              <IconButton onClick={handleToBack}>
                 <ArrowBack className={classes.IconBack} />
               </IconButton>
             </Box>
@@ -81,7 +89,9 @@ function EditClient(props) {
           <Grid item xs={6}>
             <Paper className={classes.paper}>
               <Box component="div">
-                <Typography variant="h4">Editar cliente</Typography>
+                <Typography component="h1" variant="h4">
+                  Editar cliente
+                </Typography>
                 <Form
                   ref={formRef}
                   onSubmit={handleUpdate}

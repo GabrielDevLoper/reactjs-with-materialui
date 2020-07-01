@@ -88,14 +88,14 @@ function Header({ title = "Manager" }) {
             <Menus />
           </IconButton>
           <Box className={classes.title} component="div">
-            <Typography variant="h6" noWrap>
+            <Typography component="h1" variant="h6" noWrap>
               {title}
             </Typography>
           </Box>
           <Box component="div">
             <Box component="div" className={classes.infoUser}>
               <Typography
-                variant="span"
+                component="span"
                 style={{ color: "black", marginRight: 20 }}
               >
                 {userName}

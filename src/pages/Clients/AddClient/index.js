@@ -36,12 +36,23 @@ function AddClient() {
   const history = useHistory();
 
   async function handleAddClient(data, { reset }) {
-    await api.post("/clients", data);
+    const response = await api.post("/clients", data);
+    const { message } = response.data;
+
+    if (message) {
+      return toast.warning(`⚠️ ${message}`, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 3000,
+        className: classes.success,
+      });
+    }
+
     toast.success(`✔️ Cadastrado com sucesso`, {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 3000,
       className: classes.success,
     });
+
     reset();
   }
 
@@ -56,7 +67,7 @@ function AddClient() {
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Box component="div">
-              <IconButton button onClick={handleToBack}>
+              <IconButton onClick={handleToBack}>
                 <ArrowBack className={classes.IconBack} />
               </IconButton>
             </Box>
@@ -66,7 +77,9 @@ function AddClient() {
           <Grid item xs={6}>
             <Paper className={classes.paper}>
               <Box component="div">
-                <Typography variant="h4">Cadastrar Cliente</Typography>
+                <Typography component="h1" variant="h4">
+                  Cadastrar Cliente
+                </Typography>
                 <Form
                   ref={formRef}
                   onSubmit={handleAddClient}

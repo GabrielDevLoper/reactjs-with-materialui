@@ -35,7 +35,15 @@ function Clients() {
   const classes = useStyles();
   const history = useHistory();
 
-  const { clients, page, setPage, countClients } = useContext(ClientContext);
+  const {
+    clients,
+    page,
+    setPage,
+    countClients,
+    setClients,
+    setCountClients,
+  } = useContext(ClientContext);
+
   const [search, setSearch] = useState("");
 
   const [filteredClient, setFilteredClient] = useState([]);
@@ -51,12 +59,20 @@ function Clients() {
     );
   }, [search, clients]);
 
+  useEffect(() => {
+    api.get(`/clients?page=${page}`).then((response) => {
+      setCountClients(Number(response.headers["x-total-count"]));
+      setClients(response.data);
+    });
+  }, [countClients]);
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage + 1);
   };
 
-  function handleDelete(id) {
-    api.delete(`/clients/${id}`);
+  async function HandleDeleteClient(id) {
+    await api.delete(`/clients/${id}`);
+    setClients(clients.filter((client) => client.id !== id));
   }
 
   function handleToAddClient() {
@@ -135,7 +151,9 @@ function Clients() {
                           {client.contact}
                         </StyledTableCell>
                         <StyledTableCell align="right">
-                          <IconButton onClick={() => handleDelete(client.id)}>
+                          <IconButton
+                            onClick={() => HandleDeleteClient(client.id)}
+                          >
                             <Delete color="secondary" />
                           </IconButton>
                           <IconButton
@@ -152,7 +170,9 @@ function Clients() {
                   </TableBody>
                 </Table>
               </TableContainer>
-              <Typography>Page: {page}</Typography>
+              <Typography component="h1" variant="h6">
+                Page: {page}
+              </Typography>
               <TablePagination
                 rowsPerPageOptions={[5]}
                 component="div"

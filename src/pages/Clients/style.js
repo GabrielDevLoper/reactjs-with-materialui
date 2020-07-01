@@ -85,12 +85,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 
-  success: {
-    fontWeight: "bold",
-    borderRadius: 20,
-    fontSize: 20,
-  },
-
   iconEdit: {
     color: "#b26500",
   },

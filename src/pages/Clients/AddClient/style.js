@@ -45,6 +45,12 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "30px",
     color: "#6F52ED",
   },
+
+  success: {
+    fontWeight: "bold",
+    borderRadius: 20,
+    fontSize: 20,
+  },
 }));
 
 export default useStyles;
