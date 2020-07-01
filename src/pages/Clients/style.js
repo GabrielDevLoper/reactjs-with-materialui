@@ -109,6 +109,29 @@ const useStyles = makeStyles((theme) => ({
     outline: "none",
     transition: "400ms",
   },
+
+  confirmDelete: {
+    textAlign: "center",
+    width: "500px",
+    padding: "40px",
+    backgroundColor: "#373B53",
+    boxShadow: "0 20px 75px rgba(0, 0, 0, 0.23)",
+    color: "#fff",
+  },
+
+  btnYes: {
+    width: "160px",
+    padding: "10px",
+    color: "#fff",
+    cursor: "pointer",
+    marginLeft: 10,
+  },
+
+  btnGroup: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 }));
 
 export const StyledTableCell = withStyles((theme) => ({

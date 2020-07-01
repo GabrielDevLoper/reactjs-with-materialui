@@ -6,6 +6,7 @@ import { useSpring, animated } from "react-spring/web.cjs"; // web.cjs is requir
 import { Edit, Visibility } from "@material-ui/icons";
 
 import useStyles from "./style";
+import { IconButton } from "@material-ui/core";
 
 const Fade = React.forwardRef(function Fade(props, ref) {
   const { in: open, children, onEnter, onExited, ...other } = props;
@@ -38,7 +39,7 @@ Fade.propTypes = {
   onExited: PropTypes.func,
 };
 
-export default function SpringModal({ btnTitle, children, Icon }) {
+export default function SpringModal({ children }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
 
@@ -53,8 +54,7 @@ export default function SpringModal({ btnTitle, children, Icon }) {
   return (
     <div>
       <button className={classes.btn} type="button" onClick={handleOpen}>
-        <img src={Icon} alt="" />
-        {btnTitle}
+        Open Modal
       </button>
 
       <Modal

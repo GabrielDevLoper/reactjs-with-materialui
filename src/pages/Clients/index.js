@@ -27,6 +27,7 @@ import Main from "../../components/Main";
 import useStyles, { StyledTableCell, StyledTableRow } from "./style";
 
 import api from "../../services/api";
+import { confirmAlert } from "react-confirm-alert";
 
 import { ClientContext } from "../../contexts/clients";
 
@@ -45,7 +46,6 @@ function Clients() {
   } = useContext(ClientContext);
 
   const [search, setSearch] = useState("");
-
   const [filteredClient, setFilteredClient] = useState([]);
 
   useEffect(() => {
@@ -64,15 +64,49 @@ function Clients() {
       setCountClients(Number(response.headers["x-total-count"]));
       setClients(response.data);
     });
-  }, [countClients]);
+  }, [page, countClients]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage + 1);
   };
 
   async function HandleDeleteClient(id) {
-    await api.delete(`/clients/${id}`);
-    setClients(clients.filter((client) => client.id !== id));
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className={classes.confirmDelete}>
+            <h1>Você tem certeza?</h1>
+            <p>Deseja excluir este cliente?</p>
+            <div className={classes.btnGroup}>
+              <Button
+                variant="contained"
+                className={classes.btnYes}
+                color="primary"
+                onClick={onClose}
+              >
+                Não
+              </Button>
+              <Button
+                variant="contained"
+                color="secondary"
+                className={classes.btnYes}
+                onClick={async () => {
+                  await api.delete(`/clients/${id}`);
+                  setClients(clients.filter((client) => client.id !== id));
+                  toast.info(`✔️ Excluído com sucesso`, {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 3000,
+                  });
+                  onClose();
+                }}
+              >
+                Sim, exclua-o!
+              </Button>
+            </div>
+          </div>
+        );
+      },
+    });
   }
 
   function handleToAddClient() {
